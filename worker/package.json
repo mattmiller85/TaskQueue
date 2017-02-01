@@ -1,0 +1,7 @@
+{
+    "name": "task_queue_worker",
+    "version": "0.0.1",
+    "dependencies": {
+        "amqplib": "^0.5.1"
+    }
+}
