@@ -35,6 +35,7 @@ amqp.connect(rabbitURI, function (err, conn) {
                 console.log("Done.");
                 channel.ack(message);
                 console.log("Waiting...");
+                sendResultToTestFinishedQueue(policy_info, conn);
             });
         });
     });
@@ -51,5 +52,18 @@ function listenForPolicyDetailsAndExecuteRunner(ch, callback) {
         callback(msg, ch);
     }, {
         noAck: false
+    });
+}
+
+
+function sendResultToTestFinishedQueue(policy_info, conn){
+    conn.createChannel(function (err, ch) {
+        var q = 'test_finished';
+        ch.assertQueue(q, {
+            durable: true
+        });
+        ch.sendToQueue(q, new Buffer(JSON.stringify(policy_info)), {
+            persistent: true
+        });
     });
 }
