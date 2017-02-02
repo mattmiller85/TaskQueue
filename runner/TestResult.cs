@@ -36,6 +36,7 @@ namespace PolicySanityChecker
                 Url = Output.Substring(urlIndex + 10, Output.Substring(urlIndex + 10).IndexOf(" ") + 1).Trim();
 
             var premiumDifferenceIndex = Output.IndexOf("PREMIUM_DIFFERENCE");
+            PremiumDifferences = BsonDocument.Parse("{ diffs: [] }");
             if(premiumDifferenceIndex > -1){
                 var premiumDifferenceEndIndex = Output.IndexOf("END_PREMIUM_DIFFERENCE");
                 var premStartIndex = premiumDifferenceIndex + "PREMIUM_DIFFERENCE".Length;
@@ -44,6 +45,7 @@ namespace PolicySanityChecker
             }
 
             var il16Index = Output.IndexOf("IL_16_MESSAGES");
+            IL16Messages = BsonDocument.Parse("{ messages: [] }");
             if(il16Index > -1){
                 var il16EndIndex = Output.IndexOf("END_IL_16_MESSAGES");
                 var il16StartIndex = il16Index + "IL_16_MESSAGES".Length;                
@@ -63,6 +65,7 @@ namespace PolicySanityChecker
             }
 
             var pageEditIndex = Output.IndexOf("PAGE_EDIT_BEGIN");
+            PageEdits = BsonDocument.Parse("{ edits: [] }");
             if(pageEditIndex > -1){
                 var pageEditEndIndex = Output.IndexOf("PAGE_EDIT_END");
                 var pageEditStartIndex = pageEditIndex + "PAGE_EDIT_BEGIN".Length;                

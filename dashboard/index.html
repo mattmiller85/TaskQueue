@@ -69,8 +69,11 @@
       </div>
 
       <div class="row" data-bind="foreach: last_results">
-        <div class="alert alert-success" role="alert">
+        <div data-bind="visible: Pass" class="alert alert-success" role="alert">
             <strong>Woohooo!</strong> <span data-bind="text: MasterCompany"></span> policy <span data-bind="text: Symbol"></span> <span data-bind="text: PolicyNumber"></span> mod <span data-bind="text: Mod"></span> just passed our screening.
+        </div>
+        <div data-bind="visible: Fail" class="alert alert-danger" role="alert">
+            <strong>Oh Snap!</strong> <span data-bind="text: MasterCompany"></span> policy <span data-bind="text: Symbol"></span> <span data-bind="text: PolicyNumber"></span> mod <span data-bind="text: Mod"></span> just failed our screening, it's in the list below.
         </div>
       </div>
 

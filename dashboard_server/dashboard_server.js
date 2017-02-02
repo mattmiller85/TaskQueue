@@ -48,7 +48,6 @@ MongoClient.connect(url, function(err, db) {
 
             if(message.type === "give_latest"){
                 collection = db.collection('results');
-                // Insert some documents
                 collection.find({}).sort( { Completed: 1 } ).toArray(function(err, docs) {
                     conn.sendText(JSON.stringify({ "type": "results", "results": docs }));
                 });
@@ -58,12 +57,24 @@ MongoClient.connect(url, function(err, db) {
              if(message.type === "get_details"){
                 var id = message.params.id;
                 collection = db.collection('results');
+                var objId = null;
+                try{
+                    objId = new ObjectID(id);
+                }catch(e){
+                    return;
+                }
                 collection.find({ _id: new ObjectID(id) }).toArray(function(err, docs) {
-                    //console.log("blah" + docs[0]);
-                    conn.sendText(JSON.stringify({ "type": "details", "details": docs[0] }));
+                    try{
+                        conn.sendText(JSON.stringify({ "type": "details", "details": docs[0] }));
+                    }catch(e){
+                        //sendError()
+                    }
                 });
                 return;
             }
+        });
+        conn.on("error", function(err){
+            console.log(err + "\r\n");
         });
     }).listen(876);
     console.log("PolicyRunnerDashboard listening on port 876...");
