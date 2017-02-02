@@ -36,11 +36,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Production Policy Screener</a>
+          <a class="navbar-brand" href="index.html">Production Policy Screener</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>          
+            <li class="active"><a href="index.html">Home</a></li>          
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -62,10 +62,48 @@
           <label>Mod</label> <span data-bind="text: result().Mod"></span>
         </div>
         <div>
-          <label>Company</label> <span data-bind="text: result().Company"></span>
+          <label>Company</label> <span data-bind="text: result().MasterCompany"></span>
         </div>
         <div>
           <label>Url</label> <a data-bind="attr: { href: result().Url }, text: result().Url"></a>
+        </div>
+        <div>
+          <label>IL 16 Messages</label>
+          <ul data-bind="foreach: result().IL16Messages.messages">
+            <li data-bind="text: $data"></li>
+          </ul>
+        </div>
+        <div>
+          <label>Premium Differences</label>
+          <ul data-bind="foreach: result().PremiumDifferences.diffs">
+            <li>
+              <div>
+                <label>Coverage Part</label> <span data-bind="text: part"></span>
+              </div>
+              <div>
+                <label>Location</label> <span data-bind="text: orig.LocationNumber"></span>
+              </div>
+              <div>
+                <label>Building</label> <span data-bind="text: orig.BuildingNumber"></span>
+              </div>
+              <div>
+                <label>ClassCode</label> <span data-bind="text: orig.ClassCode"></span>
+              </div>
+              <div>
+                <label>Was</label> <span data-bind="text: orig.Premium"></span> (<span data-bind="text: orig.Coverage"></span>)
+              </div>
+              <div>
+                <label>Now</label> <span data-bind="text: $data.new.Premium"></span> (<span data-bind="text: $data.new.Coverage"></span>)
+              </div>
+              <div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <label>Page Edits</label>
+          <ul data-bind="foreach: result().PageEdits.edits">
+            <li data-bind="text: $data"></li>
+          </ul>
         </div>
         <div>
           <label>Output</label> <pre data-bind="text: result().Output"></pre>
