@@ -2,28 +2,33 @@
 var ResultsManager = require("./results_manager.js");
 
 var ViewModel = {
-        results: ko.observableArray(),
-        last_results: ko.observableArray()
+        result: ko.observable({"_id":"",
+            "PCName":"",
+            "Pass":false,
+            "Fail":false,
+            "IsErrorOutput":false,
+            "Output":"",
+            "PremiumDifferences":{},"IL16Messages":{},"PageEdits":{"edits":[]},
+            "Url":"",
+            "Symbol":"",
+            "PolicyNumber":"",
+            "Mod":"",
+            "MasterCompany":"",
+            "Completed":""})
     };
 ko.applyBindings(ViewModel, document.getElementById("main"));
 
 var manager = new ResultsManager({
-    gotResultsCallback: function(results){
-        if(results.length === 1){
-            ViewModel.last_results.push(results[0]);
-            setTimeout(function(){ ViewModel.last_results.shift(); }, 4000);
-        }
-        results.forEach(function(result) {
-            ViewModel.results.unshift(result);
-        });
+    gotDetailsCallback: function(result){
+        ViewModel.result(result)
     },
     opened: function(){
-        askForLatest();
+        askForDetails();
     }
 });
 
-function askForLatest(){
-    manager.askForLatestResults();
+function askForDetails(){
+    manager.getDetails(window.location.hash.substr(1));
 }
 
 },{"./results_manager.js":2}],2:[function(require,module,exports){

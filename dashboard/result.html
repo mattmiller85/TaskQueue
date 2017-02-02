@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Production Policy Screener</title>
+    <title>Details</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -40,21 +40,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <!--<li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>-->
+            <li class="active"><a href="#">Home</a></li>          
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -62,46 +48,24 @@
 
     <div id="main" class="container theme-showcase" role="main">
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Latest Policies From Workflow</h1>
-        <p>Below are the latest package policies to come into workflow as amendments or renewals.</p>
-      </div>
-
-      <div class="row" data-bind="foreach: last_results">
-        <div class="alert alert-success" role="alert">
-            <strong>Woohooo!</strong> <span data-bind="text: MasterCompany"></span> policy <span data-bind="text: Symbol"></span> <span data-bind="text: PolicyNumber"></span> mod <span data-bind="text: Mod"></span> just passed our screening.
-        </div>
-      </div>
-
       <div class="page-header">
-        <h1>Results</h1>
+        <h1>Details</h1>
       </div>
       <div class="row">
-        <div class="col-md-6">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Symbol</th>
-                <th>Mod</th>
-                <th>Master Company</th>
-                <th>Pass/fail</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="policies" data-bind="foreach: results">
-              <tr>
-                <td data-bind="text: PolicyNumber"></td>
-                <td data-bind="text: Symbol"></td>
-                <td data-bind="text: Mod"></td>
-                <td data-bind="text: MasterCompany"></td>
-                <td data-bind="visible: Pass"><span class="label label-success">Pass</span></td>
-                <td data-bind="visible: Fail"><span class="label label-danger">Fail</span></td>
-                <td><a data-bind="attr: { href: 'result.html#' + _id }">details</a></td>
-              </tr>
-            </tbody>
-          </table>
+        <div>
+          <label>Policy Number</label> <span data-bind="text: result().PolicyNumber"></span>
+        </div>
+        <div>
+          <label>Symbol</label> <span data-bind="text: result().Symbol"></span>
+        </div>
+        <div>
+          <label>Mod</label> <span data-bind="text: result().Mod"></span>
+        </div>
+        <div>
+          <label>Company</label> <span data-bind="text: result().Company"></span>
+        </div>
+        <div>
+          <label>Url</label> <a data-bind="attr: { href: result().Url }, text: result().Url"></a>
         </div>
       </div>
     </div> <!-- /container -->
@@ -114,6 +78,6 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
-    <script src="index.js"></script>
+    <script src="result.js"></script>
   </body>
 </html>
