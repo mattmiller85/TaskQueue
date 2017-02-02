@@ -11,7 +11,7 @@ var amqp = require('amqplib/callback_api');
 
 var region = "production";
 var branch = "PreProduction";
-var profile = "preproduction";
+var profile = "release";
 var rabbitURI = "amqp://policy_runner:policy_runner@cl-buildmonitor";
 var queueName = 'policy_queue';
 var cucumberRunnerLoggerCommand = "dotnet \"C:\\TFS\\Grange Commercial SEQ\\TOOLS\\TaskQueue\\runner\\bin\\Debug\\netcoreapp1.1\\runner.dll\"";
@@ -21,7 +21,7 @@ amqp.connect(rabbitURI, function (err, conn) {
         listenForPolicyDetailsAndExecuteRunner(ch, function (message, channel) {
             var exec = require('child_process').exec;            
             var policy_info = JSON.parse(message.content.toString());
-            console.log(policy_info);
+            console.log(policy_info + "\r\n");
             var cmd = cucumberRunnerLoggerCommand + " -policy " + policy_info.policy +
                 " -symbol " + policy_info.symbol +
                 " -mod " + policy_info.mod +
@@ -29,12 +29,12 @@ amqp.connect(rabbitURI, function (err, conn) {
                 " -region " + region +
                 " -branch " + branch +
                 " -profile " + profile;
-            console.log("Executing " + cmd);
+            console.log("Executing " + cmd + "\r\n");
             exec(cmd, function (error, stdout, stderr) {
                 // command output is in stdout
-                console.log("Done.");
+                console.log("Done." + "\r\n");
                 channel.ack(message);
-                console.log("Waiting...");
+                console.log("Waiting..." + "\r\n");
                 sendResultToTestFinishedQueue(policy_info, conn);
             });
         });
@@ -47,7 +47,7 @@ function listenForPolicyDetailsAndExecuteRunner(ch, callback) {
     });
 
     ch.prefetch(1);
-    console.log("Waiting...");
+    console.log("Waiting...\n");
     ch.consume(queueName, function (msg) {
         callback(msg, ch);
     }, {
